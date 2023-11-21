@@ -4,153 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-        }
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 16px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            background-color: #4caf50;
-            color: #fff;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #4caf50;
-            color: white;
-        }
-    </style>
+    <script src="index.js" defer></script> <!-- Include index.js -->
 </head>
 <body>
 
-<form id="registrationForm">
-    <label for="firstName">First Name:</label>
-    <input type="text" id="firstName" name="firstName" required>
+    <form id="registrationForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
 
-    <label for="lastName">Last Name:</label>
-    <input type="text" id="lastName" name="lastName" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" required>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" onchange="validateDateOfBirth()" required>
 
-    <label for="dob">Date of Birth:</label>
-    <input type="date" id="dob" name="dob" required>
+        <label for="acceptTerms">Accept Terms:</label>
+        <input type="checkbox" id="acceptTerms" required>
 
-    <label for="acceptTerms">Accept Terms?</label>
-    <input type="checkbox" id="acceptTerms" name="acceptTerms" required>
+        <button type="submit">Submit</button>
+    </form>
 
-    <button type="button" onclick="submitForm()">Submit</button>
-</form>
-
-<table id="userTable">
-    <tr>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Password</th>
-        <th>DOB</th>
-        <th>Accepted Terms</th>
-    </tr>
-</table>
-
-<script>
-    function submitForm() {
-        // Get form values
-        var firstName = document.getElementById("firstName").value;
-        var lastName = document.getElementById("lastName").value;
-        var email = document.getElementById("email").value;
-        var password = document.getElementById("password").value;
-        var dob = document.getElementById("dob").value;
-        var acceptTerms = document.getElementById("acceptTerms").checked;
-
-        // Validate email and age
-        if (!isValidEmail(email)) {
-            alert("Please enter a valid email address.");
-            return;
-        }
-
-        var age = calculateAge(dob);
-        if (age < 18 || age > 55) {
-            alert("Age must be between 18 and 55.");
-            return;
-        }
-
-        // Add entry to the table
-        var table = document.getElementById("userTable");
-        var row = table.insertRow(1); // Insert at second row to keep headers at the top
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        var cell5 = row.insertCell(4);
-
-        cell1.innerHTML = firstName + " " + lastName;
-        cell2.innerHTML = email;
-        cell3.innerHTML = password; // Note: Storing passwords in plaintext is not secure; this is just for demonstration purposes.
-        cell4.innerHTML = dob;
-        cell5.innerHTML = acceptTerms ? "Yes" : "No";
-
-        // Clear form fields
-        document.getElementById("registrationForm").reset();
-    }
-
-    function isValidEmail(email) {
-        var emailRegex = /\S+@\S+\.\S+/;
-        return emailRegex.test(email);
-    }
-
-    function calculateAge(dob) {
-        var today = new Date();
-        var birthDate = new Date(dob);
-        var age = today.getFullYear() - birthDate.getFullYear();
-        var m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-        return age;
-    }
-</script>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Dob</th>
+                <th>Accepted terms?</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+    </table>
 
 </body>
 </html>
